@@ -20,9 +20,12 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="./lungo.js/lungo-1.2.css">
     <link rel="stylesheet" href="./lungo.js/lungo.theme.default.css">
+    <!-- PullDown CSS  -->
+     <link rel="stylesheet" href="./lungo.js/lungo.pulldown.css">
 </head>
 
 <body class="app">
+
     <section id="main">
         <header data-title="basauriko Jaiak 2012">
 
@@ -36,10 +39,14 @@
 
         <article id="welcome">Bienvenido a la Aplicacion Fiestas de Basauri 2012</article>
     </section>
-
+    <aside id="menu" class="onleft">
+        <div class="title">Selecciona una opción</div>
+        <a href="#program" data-target="section" data-icon="clock" data-label="Programa"></a>
+        <a href="#mapa" data-target="section" data-icon="map" data-label="Mapa"></a>
+        <a href="#twitts" data-target="section" data-icon="chat" data-label="Twitter(#basaurikoJaiak)"></a>
+    </aside>
     <section id="program">
-        <header data-title="Programa">
-            <a href="#menu" data-target="aside" data-icon="items" class="button onleft"></a>
+        <header data-title="Programa" data-back="home">
         </header>
 
         <footer class="toolbar with-labels">
@@ -145,30 +152,29 @@
     </section>
 
     <section id="mapa">
-        <header data-title="Mapa">
-            <a href="#menu" data-target="aside" data-icon="items" class="button onleft"></a>
+        <header data-title="Mapa" data-back="home">
         </header>
 
         <footer class="toolbar with-labels">
             <nav>
                 <a href="#mapaImagen" class="current" data-target="article" data-icon="picture" data-label="Imagen"></a>
-                <a href="#mapaGps" data-target="article" data-icon="target" data-label="GPS"></a>
+                <a href="#mapaGps" id="gps" data-target="article" data-icon="target" data-label="GPS"></a>
             </nav>
         </footer>
 
         <article id="mapaImagen">mapaImagen</article>
-        <article id="mapaGps">mapaGps</article>
+        <article id="mapaGps">
+            <!--<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.es/maps/ms?msa=0&amp;msid=205613727465182411444.0004c64b220d5f7638e04&amp;ie=UTF8&amp;ll=43.237558,-2.891946&amp;spn=0,0&amp;t=h&amp;output=embed"></iframe>-->
+            <div id="map_canvas" class="current"></div>
+        </article>
     </section>
 
     <section id="copyright">
         <header data-back="home" data-title="Copyright"></header>
-        <article></article>
+        <article>Creado por Mikel y Alvaro</article>
     </section>
 
-    <aside id="menu" class="onleft">
-        <a href="#program" data-target="section" data-icon="clock" data-label="Programa"></a>
-        <a href="#mapa" data-target="section" data-icon="map" data-label="Mapa"></a>
-    </aside>
+    
 
 
 
@@ -180,5 +186,9 @@
     <script src="app/events.js"></script>
     <script src="app/services.js"></script>
     <script src="app/view.js"></script>
+
+    <!-- Google Maps Api -->
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+
 </body>
 </html>
