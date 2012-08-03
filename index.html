@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>LungoJS 1.2</title>
+    <title>Basauriko Jaiak 2012</title>
     <meta name="description" content="">
     <meta name="author" content="Mikel Sanchez & Alvaro Ramirez">
     <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
@@ -39,12 +39,6 @@
 
         <article id="welcome">Bienvenido a la Aplicacion Fiestas de Basauri 2012</article>
     </section>
-    <aside id="menu" class="onleft">
-        <div class="title">Selecciona una opción</div>
-        <a href="#program" data-target="section" data-icon="clock" data-label="Programa"></a>
-        <a href="#mapa" data-target="section" data-icon="map" data-label="Mapa"></a>
-        <a href="#twitts" data-target="section" data-icon="chat" data-label="Twitter(#basaurikoJaiak)"></a>
-    </aside>
     <section id="program">
         <header data-title="Programa" data-back="home">
         </header>
@@ -109,43 +103,54 @@
                 </li>
             </ul>
         </article>
-        <article id="callejero" class="list scrollable">
-            <ul class="indented">
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+        <article id="callejero" class="list indented scrollable">
+            <ul>
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">13/10/2012</div>
-                    Sábado 13 de Octubre
+                    <strong>Sábado 13 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">14/10/2012</div>
-                    Domingo 14 de Octubre
+                    <strong>Domingo 14 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">15/10/2012</div>
-                    Lunes 15 de Octubre
+                    <strong>Lunes 15 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">16/10/2012</div>
-                    Martes 16 de Octubre
+                    <strong>Martes 16 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">17/10/2012</div>
-                    Miercoles 17 de Octubre
+                    <strong>Miercoles 17 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">18/10/2012</div>
-                    Jueves 18 de Octubre
+                    <strong>Jueves 18 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">19/10/2012</div>
-                    Viernes 19 de Octubre
+                    <strong>Viernes 19 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                </li>
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">20/10/2012</div>
-                    Sábado 20 de Octubre
+                    <strong>Sábado 20 de Octubre</strong><small>Dia del niño</small>
                 </li>
-                <li data-image="http://www.latostadora.com/generados/tiendas/2935/dibujos/27647.jpg">
+                </li>
+                <li class="selectable">
+                    <img src="assets/images/porron.png"/>
                     <div class="onright bubble red" data-icon="calendar">21/10/2012</div>
-                    Domingo 21 de Octubre
+                    <strong>Domingo 21 de Octubre</strong><small>Dia del niño</small>
                 </li>
             </ul>
         </article>
@@ -162,9 +167,9 @@
             </nav>
         </footer>
 
-        <article id="mapaImagen">mapaImagen</article>
+        <article id="mapaImagen"><img src="assets/images/callejero.png"/></article>
         <article id="mapaGps">
-            <!--<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.es/maps/ms?msa=0&amp;msid=205613727465182411444.0004c64b220d5f7638e04&amp;ie=UTF8&amp;ll=43.237558,-2.891946&amp;spn=0,0&amp;t=h&amp;output=embed"></iframe>-->
+            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.es/maps/ms?msa=0&amp;msid=205613727465182411444.0004c64b220d5f7638e04&amp;ie=UTF8&amp;ll=43.237558,-2.891946&amp;spn=0,0&amp;t=h&amp;output=embed"></iframe>
             <div id="map_canvas" class="current"></div>
         </article>
     </section>

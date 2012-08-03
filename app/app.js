@@ -4,10 +4,13 @@ var App = (function(lng, undefined) {
     
     lng.App.init({
         name: 'basaurikoJaiak',
-        version: '0.1'
+        version: '0.1',
+        resources: {
+            sections: [                
+                'aside.html']
+        }
     });
     
-
     return {
 
     };

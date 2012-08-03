@@ -1,5 +1,11 @@
 App.Events = (function(lng, app, undefined) {
 
+		lng.ready(function()
+		    {
+		        if (document.body.clientWidth > 481) //Para el iPad
+		            lng.View.Aside.show('#main', '#menu');
+		    });
+		
 		var map;
 		var initialize = function () {
 	        var mapOptions = {
@@ -48,9 +54,7 @@ App.Events = (function(lng, app, undefined) {
 	        map.setCenter(options.position);
 	      };		
 
-	lng.dom('#gps').tap(function(event) { alert("Pulsado"); });
-
-	lng.dom('#gps').tap(function(event) { initialize(); });
+	//lng.dom('#gps').tap(function(event) { initialize(); });
 
     return {
 
