@@ -1,7 +1,19 @@
 App.Data = (function(lng, app, undefined) {
 
-    return {
+    var term = "<nothing>";
+    var setSearchTerm = function(par_term) {
+        alert(par_term);
+        term = par_term;
+    }
 
+    var getSearchTerm = function ()
+    {
+        return term;
+    }
+
+    return {
+        setSearchTerm : setSearchTerm,
+        getSearchTerm : getSearchTerm
     }
 
 })(LUNGO, App);

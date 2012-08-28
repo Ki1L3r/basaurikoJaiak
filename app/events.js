@@ -52,12 +52,43 @@ App.Events = (function(lng, app, undefined) {
 
 	        var infowindow = new google.maps.InfoWindow(options);
 	        map.setCenter(options.position);
-	      };		
+	      };
 
-	//lng.dom('#gps').tap(function(event) { initialize(); });
-
-    return {
-
+	      var makeSearch = function(){
+        app.Services.getSearch(app.Data.getSearchTerm());
     }
 
+    // makePullDown method. Calculates distance to top and container to make the pulldown. 
+    var makePullDown = function(){
+        var pulldown_offset_top = (lng.dom("#pullDown").offset().top);
+        var container_top = (lng.dom("#tweet_container").offset().top);
+        if (pulldown_offset_top >= container_top && !pulldown_offset_top <  container_top){
+            lng.dom("#pullDown").toggleClass('loading');
+            $$('.pullDownLabel').html('Actualizando ...');
+            // update the request
+            App.Data.setSearchTerm("basaurikoJaiak");
+            makeSearch();
+           
+        }
+
+    };
+
+    lng.dom('#search_button').tap(function(event) {
+    		alert("tapTwiits?");
+            App.Data.setSearchTerm("basaurikoJaiak");
+            makeSearch();
+    })
+
+    lng.dom('#tweet_container').on('longTap', function(){
+        makePullDown();       
+    });
+
+    //lng.dom('#gps').tap(function(event) { initialize(); });
+
+    return {
+        makeSearch:makeSearch,
+        makePullDown:makePullDown
+    }		
+
+	
 })(LUNGO, App);
