@@ -7,7 +7,8 @@ var App = (function(lng, undefined) {
         version: '0.1',
         resources: {
             sections: [                
-                'aside.html']
+                'aside.html',
+                'ranking.html']
         }
     });
     

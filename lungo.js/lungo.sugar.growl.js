@@ -3,181 +3,204 @@
  *
  * @namespace LUNGO.Sugar
  * @class Growl
- * @version 2.0
+ * @version 1.1
  *
  * @author Javier Jimenez Villar <javi@tapquo.com> || @soyjavi
  */
 
 LUNGO.Sugar.Growl = (function(lng, undefined) {
-
     var _options = [];
-    var _el = null;
-    var _window = null;
-
-    var DELAY_TIME = 1;
-    var ANIMATION_MILISECONDS = 300;
-    var ATTRIBUTE = lng.Constants.ATTRIBUTE;
-    var BINDING = lng.Constants.BINDING;
 
     var SELECTOR = {
         BODY: 'body',
         GROWL: '.growl',
-        MODAL: '.growl .window',
-        MODAL_HREF: '.growl .window a',
-        WINDOW_CLOSABLE: '.growl > .url .close',
-        CONFIRM_BUTTONS: '.growl .confirm a.button'
-    };
+        MODAL: '.growl .modal',
+        NOTIFY: '.growl .notify',
+        MODAL_HREF: '.growl .modal a'
+    }
 
-    var STYLE = {
-        MODAL: 'modal',
+    var CSS_CLASS = {
         VISIBLE: 'visible',
         SHOW: 'show',
         WORKING: 'working',
         INPUT: 'input'
-    };
+    }
 
     var CALLBACK_HIDE = 'LUNGO.Sugar.Growl.hide()';
-    var MARKUP_GROWL = '<div class="growl"><div class="window"></div></div>';
+    var MARKUP_GROWL = '<div class="growl"><div class="modal"></div><div class="notify"></div></div>';
 
     /**
      *
      */
     var show = function(title, description, icon, animate, seconds, callback) {
-        _new_instance(true, animate);
+        _instance(true);
 
-        _show(_markup(title, description, icon));
-        _hide(seconds, callback);
+        var modal = _modalInstance(animate);
+        modal.html('<span class="icon ' + icon + '"></span><strong>' + title + '</strong><small>' + description + '</small>');
+        setTimeout(function() {
+            modal.addClass(CSS_CLASS.SHOW);
+        }, 100);
+
+        _auto_hide(seconds, callback);
     };
 
     /**
      *
      */
     var hide = function() {
-        _window.removeClass(STYLE.SHOW);
+        _hide_children();
+
         setTimeout(function() {
-            _el.style('display', 'none').removeClass('url').removeClass('confirm');
-        }, ANIMATION_MILISECONDS);
-    };
-
-    /**
-     *
-     */
-    var confirm = function(options) {
-        _options = options;
-        _new_instance(false);
-
-        var markup = '<p>' + _markup(options.title, options.description, options.icon) + '</p><hr/>';
-        markup += _button_markup(options.accept, 'accept');
-        markup += _button_markup(options.cancel, 'cancel');
-
-        _window.addClass('special confirm');
-        _show(markup);
+            lng.dom(SELECTOR.GROWL).style('display', 'none');
+        }, 300);
     };
 
     /**
      *
      */
     var notify = function(title, description, icon, type, seconds, callback) {
-        _new_instance(false);
+        _instance(false);
 
-        _window.addClass(type || 'info').addClass('special notify');
-        _show(_markup(title, description, icon));
-        _hide(seconds, callback);
+        var notify = lng.dom(SELECTOR.NOTIFY);
+        if (type) {
+            notify.addClass(type);
+        }
+        notify.html('<span class="icon ' + icon + '"></span><strong>' + title + '</strong><br/><small>' + description + '</small>');
+
+        setTimeout(function() {
+            notify.addClass(CSS_CLASS.SHOW);
+        }, 300);
+
+        _auto_hide(seconds, callback);
     };
 
     /**
      *
      */
-    var html = function(markup, closable) {
-        _new_instance(true);
+    var option = function(title, options) {
+        _instance(true);
 
-        _window.addClass('url');
-        markup += (closable) ? '<span class="icon close"></span>' : '';
-        _show(markup);
+        _options = options;
+        var buttons = _createButtons(options);
+
+
+        var modal = lng.dom(SELECTOR.MODAL);
+        modal.removeClass(CSS_CLASS.WORKING).removeClass(CSS_CLASS.SHOW);
+        modal.addClass('input').html('<strong>' + title + '</strong>' + buttons).show();
+
+        setTimeout(function(){
+            modal.addClass('show');
+        }, 100);
     };
 
     /**
      *
      */
-    var loading = function() {
-        _new_instance(true);
+    var html = function(html, closable, callback) {
+        html += (closable) ? '<span class="icon close"></span>' : '';
 
-        var data_loading = lng.Attributes.Data.Loading.html;
-        var html_binded = data_loading.replace(BINDING.START + BINDING.KEY + BINDING.END, 'icon loading white');
-        _show(html_binded);
+        _instance(true);
+
+        var modal = _modalInstance(false);
+        modal.html(html).addClass('url');
+        setTimeout(function() {
+            modal.addClass(CSS_CLASS.SHOW);
+        }, 100);
+
+        _auto_hide(0, callback);
     };
+
 
     var _init = function() {
         lng.dom(SELECTOR.BODY).append(MARKUP_GROWL);
-        _el = lng.dom(SELECTOR.GROWL);
-        _window = _el.children('.window');
-
         _subscribeEvents();
     };
 
-    var _new_instance = function(modal, animate) {
-        _el.style('display') === 'none' && _el.show();
-        modal && _el.addClass(STYLE.MODAL) || _el.removeClass(STYLE.MODAL);
+    var _instance = function(modal) {
+        var growl = lng.dom(SELECTOR.GROWL);
 
-        _window.removeClass(STYLE.SHOW).removeClass(STYLE.WORKING);
-        _window.removeClass('url').removeClass('notify').removeClass('confirm').removeClass('special');
-        _window.removeClass('error').removeClass('alert').removeClass('success');
+        growl.style('display') === 'none' && growl.show();
+        modal && growl.addClass('modal');
+    };
+
+    var _modalInstance = function(animate) {
+        var modal = lng.dom(SELECTOR.MODAL);
+        modal.removeClass(CSS_CLASS.SHOW);
+        modal.removeClass(CSS_CLASS.INPUT);
+
+        _animate(modal, animate);
+
+        return modal;
+    };
+
+    var _animate = function(element, animate) {
         if (animate) {
-            _window.addClass(STYLE.WORKING);
+            element.addClass(CSS_CLASS.WORKING);
+        }
+        else {
+            element.removeClass(CSS_CLASS.WORKING);
         }
     };
 
-    var _show = function(html) {
-        _window.html(html);
-        setTimeout(function() {
-            _window.addClass(STYLE.SHOW);
-        }, DELAY_TIME);
+    var _createButtons = function(options) {
+        var buttons = '';
+        for (var i = 0, len = options.length; i < len; i++) {
+            buttons += _option_button(options[i].color, 'growl_option_' + i, options[i].icon, options[i].name);
+        };
+
+        return buttons;
     };
 
-    var _hide = function(seconds, callback) {
-        if (seconds !== undefined && seconds !== 0) {
-            var miliseconds = seconds * 1000;
-            setTimeout(function() {
-                hide();
-                if (callback) setTimeout(callback, ANIMATION_MILISECONDS);
-            }, miliseconds);
+    var _option_button = function(color, id, icon, label) {
+        id = (id !== undefined) ? 'id="' + id + '"' : '';
+        return '<a href="#" ' + id + ' class="button ' + color + '"><span class="icon ' + icon + '"></span>' + label + '</a>';
+    };
+
+    var _auto_hide = function(seconds, callback) {
+        if (seconds != undefined && seconds != 0) {
+            if (callback === undefined) {
+                callback = CALLBACK_HIDE;
+            }
+            setTimeout(callback, seconds * 1000);
         }
     };
 
-    var _markup = function(title, description, icon) {
-        return '<span class="icon ' + icon + '"></span><strong>' + title + '</strong><small>' + description + '</small>';
+    var _hide_children = function() {
+        _hide_child(SELECTOR.MODAL);
+        _hide_child(SELECTOR.NOTIFY);
     };
 
-    var _button_markup = function(options, callback) {
-        return '<a href="#" data-callback="' + callback + '" class="button ' + options.color + '" data-icon="' + options.icon + '">' + options.label + '</a>';
+    var _hide_child = function(selector) {
+        var child = lng.dom(selector);
+        if (child.hasClass(CSS_CLASS.SHOW)) {
+            child.removeClass(CSS_CLASS.SHOW);
+        }
     };
 
     var _subscribeEvents = function() {
-        _window.tap(function(event) {
-            if (_window.hasClass('notify')) {
+        lng.dom(SELECTOR.NOTIFY).bind('click', function() {
+            lng.dom(SELECTOR.NOTIFY).removeClass(CSS_CLASS.SHOW);
+        });
+
+        lng.dom('.growl .modal.input a, .growl .modal .close').tap(function(event) {
+            if (lng.dom(this).attr('id')) {
+                id = lng.dom(this).attr('id').replace(/growl_option_/g, '');
+                setTimeout(_options[id].callback, 100);
+            } else {
+                event.preventDefault();
                 hide();
+                return false;
             }
         });
-
-        lng.dom(SELECTOR.CONFIRM_BUTTONS).tap(function(event) {
-            var button = lng.dom(this);
-            var callback = _options[button.data('callback')].callback;
-            if (callback) callback.call(callback);
-            hide();
-        });
-
-        lng.dom(SELECTOR.WINDOW_CLOSABLE).tap( hide );
     };
 
     _init();
 
     return {
         show: show,
+        hide: hide,
         notify: notify,
-        confirm: confirm,
-        html: html,
-        loading: loading,
-        hide: hide
-    };
-
+        option: option,
+        html: html
+    }
 })(LUNGO);

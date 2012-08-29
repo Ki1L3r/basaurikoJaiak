@@ -8,15 +8,19 @@ App.View = (function(lng, app, undefined) {
 
     //  render list & pulldown-to-refresh
     var render_list = function(tweets){
+
+        
+
         lng.View.Template.List.create ({
             el : '#tweet_container',
             template: 'tweet_template',
             data: tweets
         });
-        alert("entraenRender");
+        
         var markup_content = '<div id="pullDown"><span class="pullDownIcon"></span><span class="pullDownLabel">Arrastra hacia abajo para actualizar ...</span></div>';
-        lng.View.Scroll.prepend('tweet_container', markup_content);
-    
+        $$('#tweet_container').prepend(markup_content);
+        
+        //lng.View.Scroll.append('tweet_container', markup_content);
     }
 
     return{

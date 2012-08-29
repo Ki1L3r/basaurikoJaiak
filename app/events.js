@@ -8,6 +8,7 @@ App.Events = (function(lng, app, undefined) {
 		
 		var map;
 		var initialize = function () {
+			alert('mapa');
 	        var mapOptions = {
 	          zoom: 6,
 	          mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -54,7 +55,7 @@ App.Events = (function(lng, app, undefined) {
 	        map.setCenter(options.position);
 	      };
 
-	      var makeSearch = function(){
+	var makeSearch = function(){
         app.Services.getSearch(app.Data.getSearchTerm());
     }
 
@@ -73,17 +74,20 @@ App.Events = (function(lng, app, undefined) {
 
     };
 
-    lng.dom('#search_button').tap(function(event) {
-    		alert("tapTwiits?");
+    lng.dom('#twiits').tap(function(event) {
             App.Data.setSearchTerm("basaurikoJaiak");
             makeSearch();
-    })
+    });
 
     lng.dom('#tweet_container').on('longTap', function(){
         makePullDown();       
     });
 
-    //lng.dom('#gps').tap(function(event) { initialize(); });
+	lng.dom('#search_button').tap(function(event) { initialize(); });
+
+	lng.dom('#asdddd').tap(function(event) {
+            initialize();
+    });
 
     return {
         makeSearch:makeSearch,
